@@ -27,6 +27,41 @@ The public context suggests that any integration may need to preserve traceabili
 
 No public source reviewed here confirms the internal quality-AI program or the machine/software interfaces. Those details should be gathered on site before choosing an API contract.
 
+## Likely subject, goal, and responsibility of pioneer-api
+
+> **Working definition:** pioneer-api should be a secure, auditable integration API that moves validated design/quote, production/quality, and material/traceability data between Pioneer and authorized customer or internal systems. It should not independently disposition quality results or replace the ERP, MES, QMS, or other system of record.
+
+### Subject
+
+The most likely subject is a secure integration boundary around Pioneer’s customer, engineering, manufacturing, quality, and supply-chain systems—not the quality-AI model by itself.
+
+### Goal
+
+The likely goal is to turn controlled manufacturing data and workflows into usable, auditable APIs for three audiences:
+
+1. **Customers and design software:** submit design and manufacturing inputs, request quotes, and receive quote progress or results.
+2. **Production and quality teams:** expose board, order, traveler, inspection, test, and nonconformance status in near real time.
+3. **Purchasing and supply chain:** track material availability, receipts, lots, certifications, shortages, and supplier-related changes.
+
+This is supported by Pioneer’s public RFQ flow, its engineering focus on concurrent design reviews and manufacturing-readiness reviews, its assembly traveler and pre-assembly material-verification workflows, and its quality and supplier record requirements.
+
+### Responsibility
+
+The first responsibility of pioneer-api should be **reliable orchestration and translation** between external software and Pioneer’s internal systems. That means validating inputs, mapping identifiers and statuses, routing work to the correct system, exposing asynchronous job state, preserving provenance and audit history, and enforcing customer, export-control, and quality-data boundaries.
+
+Pioneer’s published supplier terms also require positive control over the configuration, validation, and program integrity of models, NC programs, test programs, inspection software, and software delivered in product. Any quality-AI machine integration therefore needs versioned artifacts, explicit validation state, and human-auditable records rather than an opaque prediction endpoint.
+
+A reasonable initial resource model to validate on site would include `customers`, `quote-requests`, `design-packages`, `orders`, `boards`, `production-runs`, `materials`, `lots`, `inspections`, `test-results`, and `nonconformances`. The API should read from or coordinate existing systems rather than become a second system of record until those boundaries are understood.
+
+### Priority hypothesis
+
+1. **Design intake and quote automation** is the strongest first use case: Pioneer already exposes an RFQ upload flow and emphasizes early design review and manufacturability review.
+2. **Production and quality status** is the strongest operational use case: Pioneer publicly describes traveler-based workflow, material verification, electrical testing, and end-to-end quality assurance.
+3. **Supply-chain and raw-material traceability** is a strong adjacent use case: the published terms cover material authenticity, certificates, shelf life, supplier changes, flow-down requirements, and long-lived quality records.
+4. **Quality-AI integration** is likely the enabling machine interface: its outputs should become traceable inspection or decision records, not unreviewed autonomous dispositions.
+
+This prioritization is an informed hypothesis. The site visit should confirm which system owns quotes, production status, inventory, inspection results, and AS9102/FAI records, plus whether the API is intended for customer-facing integrations, internal automation, or both.
+
 ## Technical direction
 
 - TypeScript
@@ -41,3 +76,6 @@ No public source reviewed here confirms the internal quality-AI program or the m
 - [Pioneer Circuits — Certifications and Recognition](https://www.pioneercircuits.com/company/certifications-and-recognition)
 - [Pioneer Circuits — PCBA Manufacturing](https://www.pioneercircuits.com/capabilities/pcba-manufacturing)
 - [Pioneer Circuits — Purchase Order Terms and Conditions](https://www.pioneercircuits.com/pcba-manufacturing-terms-conditions)
+- [Pioneer Circuits — Request for Quote](https://www.pioneercircuits.com/capabilities/rfq)
+- [Pioneer Circuits — PCB Engineering](https://www.pioneercircuits.com/capabilities/pcb-engineering)
+- [Pioneer Circuits — Printed Circuit Board Assembly](https://www.pioneercircuits.com/capabilities/printed-circuit-board-assembly)
