@@ -1,0 +1,9 @@
+{
+  "name": "pioneer-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bun test",
+    "iwp": "bun run src/cli.ts"
+  }
+}

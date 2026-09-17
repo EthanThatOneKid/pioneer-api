@@ -62,6 +62,28 @@ A reasonable initial resource model to validate on site would include `customers
 
 This prioritization is an informed hypothesis. The site visit should confirm which system owns quotes, production status, inventory, inspection results, and AS9102/FAI records, plus whether the API is intended for customer-facing integrations, internal automation, or both.
 
+## IWP bubbled-label proof
+
+The first proof-of-concept reads a UTF-16LE `.iwp` program and a corresponding bubbled image. It extracts numeric bubble labels with Tesseract TSV output, validates a proposed source-to-bubble mapping, and writes a new `.iwp` with only the selected `(Name "...")` values replaced. The output preserves the UTF-16LE BOM, long lines, and CRLF line endings.
+
+The IWP program name is treated as the grouping boundary. Use `--group` when a file contains more than one named program. Mapping entries can constrain the group and feature type:
+
+```json
+[
+  {"group":"Hole group","recordType":"Pnt","from":"17","to":"101"}
+]
+```
+
+Run it with an image:
+
+```sh
+bun run src/cli.ts --iwp input.iwp --image bubbled.png --mapping mapping.json --output relabeled.iwp
+```
+
+For deterministic tests without an OCR installation, replace `--image` with `--bubble-tsv` using Tesseract TSV output. The mapping is explicit in this first proof rather than guessed: an image tells us which numbers are visible, but not by itself which arbitrary IWP feature each number denotes. The pipeline rejects missing, ambiguous, duplicate, or image-invisible mappings instead of silently rewriting a measurement program.
+
+Current limitations are intentional: the proof does not yet infer geometric correspondence between a drawing and IWP feature coordinates, interpret every InSpec command, or verify that a rewritten program runs on a machine. Those are the next validation layers after the label-rewrite invariant is established.
+
 ## Technical direction
 
 - TypeScript
