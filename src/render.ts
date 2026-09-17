@@ -1,4 +1,4 @@
-import type { FeatureAnchor, AffineTransform } from "./geometry.ts";
+import type { FeatureAnchor, AffineTransform, Point2D } from "./geometry.ts";
 import { applyTransform } from "./geometry.ts";
 
 const numberPattern = "[-+]?\\d+(?:\\.\\d+)?(?:[eE][-+]?\\d+)?";
@@ -45,15 +45,16 @@ export function renderIwpSvg(
 export function renderBubbledSvg(
   features: FeatureAnchor[],
   worldToImage: AffineTransform,
-  bubbles: Array<{ number: string; feature: FeatureAnchor }>,
+  bubbles: Array<{ number: string; feature: FeatureAnchor; offset?: Point2D }>,
   width: number,
   height: number,
 ): string {
   const source = renderIwpSvg(features, worldToImage, width, height);
-  const overlay = bubbles.map(({ number, feature }) => {
-    const point = applyTransform(worldToImage, feature.point);
+  const overlay = bubbles.map(({ number, feature, offset = { x: 0, y: 0 } }) => {
+    const anchor = applyTransform(worldToImage, feature.point);
+    const center = { x: anchor.x + offset.x, y: anchor.y + offset.y };
     const radius = 18;
-    return `<g data-bubble-number="${escapeXml(number)}"><circle cx="${point.x}" cy="${point.y}" r="${radius}" fill="#fff7ed" stroke="#c2410c" stroke-width="3"/><text x="${point.x}" y="${point.y + 6}" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#9a3412">${escapeXml(number)}</text></g>`;
+    return `<g data-bubble-number="${escapeXml(number)}"><path d="M ${anchor.x} ${anchor.y} L ${center.x} ${center.y}" stroke="#c2410c" stroke-width="2" stroke-dasharray="5 4"/><circle cx="${center.x}" cy="${center.y}" r="${radius}" fill="#fff7ed" stroke="#c2410c" stroke-width="3"/><text x="${center.x}" y="${center.y + 6}" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#9a3412">${escapeXml(number)}</text></g>`;
   }).join("");
   return source.replace("</svg>", `${overlay}</svg>`);
 }

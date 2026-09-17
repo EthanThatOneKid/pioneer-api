@@ -5,6 +5,8 @@ export type BubbleObservation = {
   width: number;
   height: number;
   confidence: number;
+  anchorX?: number;
+  anchorY?: number;
 };
 
 export function parseTesseractTsv(tsv: string): BubbleObservation[] {

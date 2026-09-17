@@ -46,17 +46,21 @@ describe("deterministic six-feature IWP-to-bubble proof", () => {
     const transform = fitViewport(features, 1000, 700, 120);
     const bubbleNumbersByFeature = ["705", "102", "991", "314", "808", "127"];
     const bubbles: BubbleObservation[] = features.map((feature, index) => {
-      const point = {
+      const anchor = {
         x: transform.a * feature.point.x + transform.c * feature.point.y + transform.e,
         y: transform.b * feature.point.x + transform.d * feature.point.y + transform.f,
       };
+      const offset = { x: index % 2 === 0 ? 52 : -52, y: index < 3 ? -42 : 42 };
+      const center = { x: anchor.x + offset.x, y: anchor.y + offset.y };
       return {
         number: bubbleNumbersByFeature[index],
-        left: point.x - 18,
-        top: point.y - 18,
+        left: center.x - 18,
+        top: center.y - 18,
         width: 36,
         height: 36,
         confidence: 100,
+        anchorX: anchor.x,
+        anchorY: anchor.y,
       };
     }).reverse();
 
@@ -67,7 +71,11 @@ describe("deterministic six-feature IWP-to-bubble proof", () => {
     await Bun.write(bubbledSvgPath, renderBubbledSvg(
       features,
       transform,
-      features.map((feature, index) => ({ number: bubbleNumbersByFeature[index], feature })),
+      features.map((feature, index) => ({
+        number: bubbleNumbersByFeature[index],
+        feature,
+        offset: { x: index % 2 === 0 ? 52 : -52, y: index < 3 ? -42 : 42 },
+      })),
       1000,
       700,
     ));

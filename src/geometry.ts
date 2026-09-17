@@ -56,6 +56,13 @@ export function bubbleCenter(bubble: BubbleObservation): Point2D {
   };
 }
 
+export function bubbleAnchor(bubble: BubbleObservation): Point2D {
+  return {
+    x: bubble.anchorX ?? bubbleCenter(bubble).x,
+    y: bubble.anchorY ?? bubbleCenter(bubble).y,
+  };
+}
+
 export function fitViewport(
   features: FeatureAnchor[],
   width: number,
@@ -92,8 +99,8 @@ export function matchBubblesToFeatures(
     feature,
     bubble,
     distance: Math.hypot(
-      applyTransform(worldToImage, feature.point).x - bubbleCenter(bubble).x,
-      applyTransform(worldToImage, feature.point).y - bubbleCenter(bubble).y,
+      applyTransform(worldToImage, feature.point).x - bubbleAnchor(bubble).x,
+      applyTransform(worldToImage, feature.point).y - bubbleAnchor(bubble).y,
     ),
   }))).filter((candidate) => candidate.distance <= tolerance)
     .sort((left, right) => left.distance - right.distance);
