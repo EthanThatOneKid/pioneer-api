@@ -84,6 +84,20 @@ For deterministic tests without an OCR installation, replace `--image` with `--b
 
 Current limitations are intentional: the proof does not yet infer geometric correspondence between a drawing and IWP feature coordinates, interpret every InSpec command, or verify that a rewritten program runs on a machine. Those are the next validation layers after the label-rewrite invariant is established.
 
+## Deterministic six-feature fixture
+
+The next layer is now implemented in `src/geometry.ts`, `src/render.ts`, and `src/pipeline.ts`. The renderer converts the supported IWP point geometry into a deterministic SVG coordinate space. The matcher then applies an explicit affine transform—translation, scale, axis direction, and rotation are all represented—and performs a one-to-one nearest-feature match within a hard tolerance. Source coordinates are normalized to millimetres before the image transform, so unit conversion is separate from drawing registration.
+
+`tests/fixture.e2e.test.ts` is the first end-to-end proof. It creates six UTF-16LE IWP point features with arbitrary names, converts inch coordinates to millimetres, renders source and bubbled SVGs, applies offsets and scaling, matches all six bubble observations, and rewrites all six names while preserving the IWP envelope. It passes deterministically with no model call and no OCR dependency:
+
+```sh
+bun test
+```
+
+The AI SDK belongs at the observation boundary: it can return structured bubble boxes, numbers, leader endpoints, and confidence from the supplied image. It must not directly decide the rewrite. The deterministic layer verifies the proposed observations against the rendered geometry, rejects unmatched or ambiguous assignments, and only then replaces `(Name "...")` values.
+
+The current renderer intentionally supports only point anchors. Extending it to lines, circles, arcs, slots, and other InSpec geometry should reuse the same canonical-units and affine-registration contract rather than allowing each feature type to invent its own coordinate rules.
+
 ## Technical direction
 
 - TypeScript

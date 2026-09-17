@@ -82,8 +82,9 @@ export async function writeIwp(path: string, text: string): Promise<void> {
 }
 
 function recordTypeBefore(text: string, offset: number): string {
-  const prefix = text.slice(Math.max(0, offset - 320), offset);
-  const commandMatches = [...prefix.matchAll(/(?:^|[\r\n(])([A-Za-z][A-Za-z0-9]*)\s+(?:\d+\s+)?[^()]*$/g)];
+  const lineStart = text.lastIndexOf("\n", Math.max(0, offset - 1)) + 1;
+  const line = text.slice(lineStart, offset);
+  const commandMatches = [...line.matchAll(/(?:^|\s)([A-Za-z][A-Za-z0-9]*)\s+\d+\s+[^\s(]+/g)];
   return commandMatches.at(-1)?.[1] ?? "Unknown";
 }
 
