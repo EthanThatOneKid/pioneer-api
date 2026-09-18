@@ -14,6 +14,18 @@ The engagement is intended to answer one practical question:
 
 > Given an approved source `.iwp` file and its corresponding bubbled PDF/image, can the system reliably identify the bubble numbers, match them to the correct IWP features, and generate a reviewable relabeled IWP without changing measurement logic or corrupting the source format?
 
+## Commercial positioning
+
+This is a first engagement with credible follow-on potential. The problem is tied directly to Pioneer’s production bottleneck: manual cross-referencing between bubbled drawings, inspection priorities, and IWP feature labels. The pilot should therefore be priced as specialized engineering and validation work, not as a small OCR script, while remaining tightly bounded and reviewable.
+
+The 88-hour estimate and authorization up to 100 hours are a fair pilot boundary because they cover discovery, proprietary-format handling, geometry/rendering work, model evaluation, registration risk, audit output, and handoff. The quote should not promise a production-ready system or guaranteed accuracy before an approved real pair is evaluated.
+
+Recommended relationship treatment:
+
+- Keep the normal professional billing rate rather than discounting the technical work because this is a first contract.
+- If desired, offer a one-time credit against a separately authorized Phase 2 implementation after the pilot is accepted; do not make that credit part of the pilot’s technical scope.
+- Do not use a success fee or production-throughput guarantee until Pioneer provides real data and the operational baseline is measurable.
+
 ## Deliverables
 
 1. **Discovery and integration boundary**
