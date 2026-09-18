@@ -4,22 +4,22 @@ import { z } from "zod";
 import type { BubbleObservation } from "./ocr.ts";
 
 const normalizedObservationSchema = z.object({
-  number: z.string().regex(/^\d{1,5}$/),
+  number: z.string(),
   box: z.object({
-    left: z.number().min(0).max(1),
-    top: z.number().min(0).max(1),
-    width: z.number().min(0).max(1),
-    height: z.number().min(0).max(1),
+    left: z.number(),
+    top: z.number(),
+    width: z.number(),
+    height: z.number(),
   }),
   leaderEndpoint: z.object({
-    x: z.number().min(0).max(1),
-    y: z.number().min(0).max(1),
+    x: z.number(),
+    y: z.number(),
   }),
-  confidence: z.number().min(0).max(1),
+  confidence: z.number(),
 });
 
 const detectionSchema = z.object({
-  observations: z.array(normalizedObservationSchema).min(1).max(32),
+  observations: z.array(normalizedObservationSchema),
 });
 
 export type GeminiBubbleDetection = z.infer<typeof detectionSchema>;
@@ -29,10 +29,34 @@ export type DetectionImageSize = {
   height: number;
 };
 
+function assertNormalizedDetection(detection: GeminiBubbleDetection): void {
+  if (detection.observations.length < 1 || detection.observations.length > 32) {
+    throw new Error(`Gemini returned ${detection.observations.length} observations; expected 1-32`);
+  }
+  for (const observation of detection.observations) {
+    if (!/^\d{1,5}$/.test(observation.number)) {
+      throw new Error(`Gemini returned a non-numeric bubble label: ${observation.number}`);
+    }
+    const values = [
+      observation.box.left,
+      observation.box.top,
+      observation.box.width,
+      observation.box.height,
+      observation.leaderEndpoint.x,
+      observation.leaderEndpoint.y,
+      observation.confidence,
+    ];
+    if (values.some((value) => !Number.isFinite(value) || value < 0 || value > 1)) {
+      throw new Error(`Gemini returned coordinates outside normalized range for bubble ${observation.number}`);
+    }
+  }
+}
+
 export function denormalizeBubbleObservations(
   detection: GeminiBubbleDetection,
   image: DetectionImageSize,
 ): BubbleObservation[] {
+  assertNormalizedDetection(detection);
   return detection.observations.map((observation) => ({
     number: observation.number,
     left: observation.box.left * image.width,
