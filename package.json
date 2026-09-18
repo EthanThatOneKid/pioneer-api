@@ -5,6 +5,7 @@
   "scripts": {
     "test": "bun test",
     "iwp": "bun run src/cli.ts",
-    "fixture:visualize": "bun run scripts/render-six-feature-fixture.ts"
+    "fixture:visualize": "bun run scripts/render-six-feature-fixture.ts",
+    "fixture:explorer": "bun run scripts/render-six-feature-fixture.ts && bun run scripts/build-six-feature-explorer.ts"
   }
 }
