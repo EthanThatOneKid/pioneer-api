@@ -15,7 +15,9 @@ bun run service
 
 The server listens on `PORT` or `8787`. The browser UI is at `/`; the OpenAPI document is at `/openapi.json`; health is at `/healthz`.
 
-The Gemini path requires `PIONEER_GEMINI_API_KEY`. The service never displays the key. A future production adapter should implement the same observation contract against Pioneer’s approved Claude/GovCloud boundary rather than sending Pioneer data to Gemini.
+The service is strictly BYOK: enter a Google Gemini API key in the browser, where it is sent as the `x-google-gemini-api-key` request header and cleared from the form after the request. There is no server-side API-key fallback. The application does not persist or log the key, but the provider receives it for inference. Use a restricted, disposable key and synthetic fixture data only. A future production adapter should implement the same observation contract against Pioneer’s approved Claude/GovCloud boundary rather than sending Pioneer data to Gemini.
+
+Hosted synthetic-proof demo: https://pioneer-api-review-etok.zocomputer.io/
 
 ## Review fixture
 
@@ -29,8 +31,9 @@ Use `fixtures/six-feature/source.iwp` and `fixtures/six-feature/bubbled.png`. Th
 
 ## API
 
-`POST /api/v1/relabellings` accepts multipart fields:
+`POST /api/v1/relabellings` accepts multipart fields and a BYOK header:
 
+- `x-google-gemini-api-key`: visitor-supplied Google Gemini key; required for the hosted demo and never included in the multipart body;
 - `iwp`: UTF-16LE `.iwp` file;
 - `image`: PNG, JPEG, or WebP raster image;
 - `provider`: currently `gemini-proof` only;
