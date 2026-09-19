@@ -143,8 +143,6 @@ The demo uses Gemini only as the synthetic-proof vision observer. The determinis
 
 The first full-stack slice is implemented in `src/server.ts` and `src/web.ts`. It accepts `.iwp` plus a PNG/JPEG/WebP image at `POST /api/v1/relabellings`, runs the Gemini synthetic-proof detector, applies the visible affine transform, and returns a downloadable relabeled IWP. The service intentionally keeps registration parameters visible and does not claim production compatibility.
 
-**[Open the live BYOK demo](https://pioneer-api-review-etok.zocomputer.io/)** — bring a Google Gemini API key for each request and use only the checked-in synthetic fixture. The application sends the key in a request header, does not persist it, and clears the browser field after submission. Do not upload Pioneer production or export-controlled data.
-
 Run it locally with `bun run service`; see [the review service guide](docs/pioneer-api-review-service.md) and [the six-feature fixture](fixtures/six-feature/README.md).
 
 ## Sources
