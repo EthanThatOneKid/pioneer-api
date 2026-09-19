@@ -1,0 +1,16 @@
+flowchart LR
+  source["Approved source.iwp"] --> parser["IWP parser\nUTF-16LE / CRLF safe"]
+  parser --> canonical["Canonical feature model\nunits + groups + IDs"]
+  canonical --> renderer["Deterministic renderer\nSVG review artifact"]
+  renderer --> raster["Rasterizer\nPNG vision input"]
+  raster --> vision["Approved vision provider\nstructured bubbles"]
+  vision --> registration["Registration + global assignment\nresidual and ambiguity gates"]
+  canonical --> registration
+  bubbled["Approved bubbled PDF/PNG"] --> vision
+  registration --> review["Human review\naudit manifest"]
+  review --> writer["Safe IWP writer\nlabels only"]
+  writer --> proposed["Proposed relabeled IWP"]
+  proposed --> acceptance["Pioneer acceptance\nno automatic production write-back"]
+
+  provider["Synthetic proof: Google Gemini\nReal data: Pioneer-authorized Claude / GovCloud"] -.-> vision
+  system["Discus + machine interfaces\nsubject to discovery"] -.-> parser
