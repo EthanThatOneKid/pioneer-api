@@ -75,13 +75,17 @@ Recommended relationship treatment:
 
 | Item | Formula | Amount |
 | --- | --- | ---: |
-| Pilot services | `88 hours × [BILLING RATE]` | `[TO BE COMPLETED]` |
-| Contingency authorization | Up to `12 additional hours × [BILLING RATE]` | `[TO BE COMPLETED]` |
-| **Estimated pilot fee** | `88–100 hours × [BILLING RATE]` | `[TO BE COMPLETED]` |
+| Pilot services | `88 hours × $175/hour` | **$15,400** |
+| Contingency authorization | Up to `12 additional hours × $175/hour` | **$2,100** |
+| **Estimated pilot fee** | `88–100 hours × $175/hour` | **$15,400–$17,500** |
 
-- **Billing currency:** `[USD or other currency]`
-- **Billing rate:** `[hourly rate]`
-- **Invoicing cadence:** `[weekly / biweekly / milestone]`
+**Recommended commercial position:** quote the work at **$175/hour**, estimate **$15,400**, and authorize a **$17,500 not-to-exceed ceiling**. Bill actual hours, and require written approval before exceeding the ceiling or adding production scope. This is a first-engagement accommodation without discounting the specialized engineering work.
+
+A $200/hour rate would produce a $17,600 estimate and $20,000 ceiling if Pioneer’s procurement process supports a higher specialized-consulting rate. Do not select between those rates based on an assumed Pioneer budget; use the rate that reflects Ethan’s normal professional billing position and the level of access, risk, and responsibility the engagement carries.
+
+- **Billing currency:** `USD`
+- **Billing rate:** `$175/hour recommended; confirm before sending`
+- **Invoicing cadence:** `weekly or biweekly based on actual hours`
 - **Payment terms:** `[net terms]`
 - **Quote validity:** `[e.g. 30 days]`
 - **Expenses:** No travel, third-party, or infrastructure expenses are included unless approved in writing.
