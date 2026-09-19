@@ -95,11 +95,11 @@ The first real image-model call now runs through AI SDK with Google Gemini 3.6 F
 | Bubble observations returned | 6 |
 | Missing bubble numbers | 0 |
 | Unexpected bubble numbers | 0 |
-| Maximum leader-endpoint error | 3.84 px |
+| Maximum leader-endpoint error | 2.56 px in the 1200×800 SVG canvas |
 | Model tokens | 3,206 |
 | Evaluation | Passed |
 
-Gemini returned all six labels—`705`, `102`, `991`, `314`, `808`, and `127`—with structured normalized boxes, leader endpoints, and confidence values. The evaluator denormalized those observations into image pixels and compared them with the fixture ground truth. This proves that the AI SDK/Google vision layer can feed the deterministic geometry matcher on this synthetic image.
+Gemini returned all six labels—`705`, `102`, `991`, `314`, `808`, and `127`—with structured normalized boxes, leader endpoints, and confidence values. The evaluator denormalized those observations into the SVG canvas coordinate space before comparing them with the fixture ground truth and invoking the IWP rewrite. This proves that the AI SDK/Google vision layer can feed the deterministic geometry matcher on this synthetic image.
 
 The model input is rasterized PNG. SVG remains the inspectable, deterministic vector artifact and is not treated as the model's required vision input. The contracted application should replace the synthetic Google provider with Pioneer-authorized Claude access through GovCloud before real company data is processed.
 
