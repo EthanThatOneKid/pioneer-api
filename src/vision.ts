@@ -28,8 +28,8 @@ export type DetectionImageSize = {
   width: number;
   height: number;
 };
-export function resolveGeminiApiKey(inputApiKey?: string, environmentApiKey = process.env.PIONEER_GEMINI_API_KEY): string {
-  const apiKey = inputApiKey?.trim() || environmentApiKey?.trim();
+export function resolveGeminiApiKey(inputApiKey?: string): string {
+  const apiKey = inputApiKey?.trim();
   if (!apiKey) throw new Error("A Google Gemini API key is required");
   return apiKey;
 }
