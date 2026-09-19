@@ -129,6 +129,7 @@ app.notFound((c) => c.json({ error: "Not found" }, 404));
 export default app;
 
 if (import.meta.main) {
-  Bun.serve({ port: Number(process.env.PORT ?? 8787), fetch: app.fetch });
-  console.log(`pioneer-api-iwp-review listening on ${process.env.PORT ?? 8787}`);
+  const port = Number(process.env.PIONEER_REVIEW_PORT ?? process.env.PORT ?? 8787);
+  Bun.serve({ port, fetch: app.fetch });
+  console.log(`pioneer-api-iwp-review listening on ${port}`);
 }
