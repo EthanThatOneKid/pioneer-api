@@ -2,6 +2,31 @@
 
 API integration exploration for a quality AI automation machine and its supporting software.
 
+## Documentation map
+
+### Start here
+
+- [Booking packet](docs/pioneer-api-booking-packet.md) — one-page checklist for the discovery meeting, decisions, and items to bring.
+- [Technical brief](docs/pioneer-api-technical-brief.md) — concise explanation of the proposed problem, proof, boundaries, and next phase.
+- [Feasibility report](docs/pioneer-api-feasibility-report.md) — evidence-backed summary of the IWP-to-bubbled-image proof.
+- [Detailed proof report](docs/iwp-bubble-proof-report.md) — implementation details, live Gemini evaluation, limitations, and remaining validation work.
+
+### Technical review
+
+- [Architecture](docs/pioneer-api-architecture.mmd) — Mermaid system diagram for the proposed integration boundary.
+- [Information request checklist](docs/pioneer-api-information-request-checklist.md) — questions and artifacts needed from Pioneer before production design.
+- [Acceptance and commercial terms](docs/pioneer-api-acceptance-and-commercial-terms.md) — proposed pilot acceptance criteria, change control, and commercial guardrails.
+
+### Commercial and legal review
+
+- [Statement of work draft](docs/pioneer-api-statement-of-work-draft.md) — phased scope, milestones, assumptions, and deliverables.
+- [Billable quote draft](docs/pioneer-api-billable-quote-draft.md) — effort, pricing assumptions, payment terms, and quote placeholders.
+- [IP and data terms draft](docs/pioneer-api-ip-and-data-terms-draft.md) — Pioneer-specific ownership, confidentiality, data handling, and reuse boundaries.
+- [IP ownership redline](docs/pioneer-api-ip-ownership-redline.md) — proposed language for machine-specific and Discus-specific deliverables.
+- [Vendor onboarding checklist](docs/pioneer-api-vendor-onboarding-checklist.md) — documents and setup items for both sides.
+
+These documents are working drafts for review. They are not a signed contract, legal advice, or a production security authorization.
+
 ## Discovery visit
 
 - **Time:** Thursday at 10:30 AM
