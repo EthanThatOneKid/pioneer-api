@@ -101,6 +101,8 @@ The first real image-model call now runs through AI SDK with Google Gemini 3.6 F
 
 Gemini returned all six labels—`705`, `102`, `991`, `314`, `808`, and `127`—with structured normalized boxes, leader endpoints, and confidence values. The evaluator denormalized those observations into image pixels and compared them with the fixture ground truth. This proves that the AI SDK/Google vision layer can feed the deterministic geometry matcher on this synthetic image.
 
+The model input is rasterized PNG. SVG remains the inspectable, deterministic vector artifact and is not treated as the model's required vision input. The contracted application should replace the synthetic Google provider with Pioneer-authorized Claude access through GovCloud before real company data is processed.
+
 This is **not** evidence of production accuracy: the image is clean, generated, known in advance, and contains only six point features. The result does establish a live model-backed observation path and a measurable evaluation harness.
 
 ## What has not yet been proven
@@ -133,7 +135,7 @@ The public Micro-Vu validation PDFs are validation reports, not the customer-sty
    Estimate affine or projective transforms from common anchors, fiducials, leader endpoints, or drawing bounds. Validate residuals and reject unstable registration.
 
 4. **Real-image evaluation**
-   Test against at least one cleared bubbled PDF/image with known ground truth. Measure bubble OCR accuracy, feature-match precision/recall, transform residuals, duplicate assignments, and rewrite fidelity.
+   Test the authorized production vision provider—Pioneer-authorized Claude through GovCloud—against at least one cleared bubbled PDF/image with known ground truth. Measure bubble detection accuracy, feature-match precision/recall, transform residuals, duplicate assignments, and rewrite fidelity.
 
 5. **Audit and safety output**
    Persist source/image hashes, model/provider metadata, transform matrices, candidate matches, residuals, rejected matches, and the exact rewritten-name diff.
@@ -148,7 +150,7 @@ We cannot yet claim:
 
 > The system is validated against real bubbled manufacturing images, full IWP geometry, or real-world registration conditions.
 
-The next decisive milestone is a cleared bubbled-image benchmark: render a corresponding IWP subset, run Gemini observation, estimate registration, measure errors, and only then permit relabeling.
+The next decisive milestone is a cleared bubbled-image benchmark: render a corresponding IWP subset, rasterize the visual inputs, run the authorized Claude observation path, estimate registration, measure errors, and only then permit relabeling.
 
 ## Implementation references
 
