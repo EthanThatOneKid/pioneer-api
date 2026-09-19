@@ -126,8 +126,6 @@ app.openapi(relabelRoute, async (c) => {
 
 app.notFound((c) => c.json({ error: "Not found" }, 404));
 
-export default app;
-
 if (import.meta.main) {
   const port = Number(process.env.PIONEER_REVIEW_PORT ?? process.env.PORT ?? 8787);
   Bun.serve({ port, fetch: app.fetch });
