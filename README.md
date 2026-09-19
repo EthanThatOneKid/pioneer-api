@@ -62,6 +62,42 @@ A reasonable initial resource model to validate on site would include `customers
 
 This prioritization is an informed hypothesis. The site visit should confirm which system owns quotes, production status, inventory, inspection results, and AS9102/FAI records, plus whether the API is intended for customer-facing integrations, internal automation, or both.
 
+## IWP bubbled-label proof
+
+The first proof-of-concept reads a UTF-16LE `.iwp` program and a corresponding bubbled image. It extracts numeric bubble labels with Tesseract TSV output, validates a proposed source-to-bubble mapping, and writes a new `.iwp` with only the selected `(Name "...")` values replaced. The output preserves the UTF-16LE BOM, long lines, and CRLF line endings.
+
+The IWP program name is treated as the grouping boundary. Use `--group` when a file contains more than one named program. Mapping entries can constrain the group and feature type:
+
+```json
+[
+  {"group":"Hole group","recordType":"Pnt","from":"17","to":"101"}
+]
+```
+
+Run it with an image:
+
+```sh
+bun run src/cli.ts --iwp input.iwp --image bubbled.png --mapping mapping.json --output relabeled.iwp
+```
+
+For deterministic tests without an OCR installation, replace `--image` with `--bubble-tsv` using Tesseract TSV output. The mapping is explicit in this first proof rather than guessed: an image tells us which numbers are visible, but not by itself which arbitrary IWP feature each number denotes. The pipeline rejects missing, ambiguous, duplicate, or image-invisible mappings instead of silently rewriting a measurement program.
+
+Current limitations are intentional: the proof does not yet infer geometric correspondence between a drawing and IWP feature coordinates, interpret every InSpec command, or verify that a rewritten program runs on a machine. Those are the next validation layers after the label-rewrite invariant is established.
+
+## Deterministic six-feature fixture
+
+The next layer is now implemented in `src/geometry.ts`, `src/render.ts`, and `src/pipeline.ts`. The renderer converts the supported IWP point geometry into a deterministic SVG coordinate space. The matcher then applies an explicit affine transform—translation, scale, axis direction, and rotation are all represented—and performs a one-to-one nearest-feature match within a hard tolerance. Source coordinates are normalized to millimetres before the image transform, so unit conversion is separate from drawing registration.
+
+`tests/fixture.e2e.test.ts` is the first end-to-end proof. It creates six UTF-16LE IWP point features with arbitrary names, converts inch coordinates to millimetres, renders source and bubbled SVGs, applies offsets and scaling, assigns six different bubble numbers, shuffles the OCR observations, matches all six bubbles by geometry rather than array order, and rewrites all six names while preserving the IWP envelope. It passes deterministically with no model call and no OCR dependency:
+
+```sh
+bun test
+```
+
+The image number intentionally does not match the IWP name. The fixture's known transform is only test setup; the matcher receives feature coordinates and bubble boxes, then derives the source-name-to-bubble-number mapping from their positions. The production image path still needs a registration stage to estimate that transform and an AI SDK observation adapter to return structured bubble boxes, numbers, leader endpoints, and confidence. The model must not directly decide the rewrite: the deterministic layer verifies one-to-one assignments, residuals, tolerances, and ambiguity before replacing `(Name "...")` values.
+
+The current renderer intentionally supports only point anchors. Extending it to lines, circles, arcs, slots, and other InSpec geometry should reuse the same canonical-units and affine-registration contract rather than allowing each feature type to invent its own coordinate rules.
+
 ## Technical direction
 
 - TypeScript

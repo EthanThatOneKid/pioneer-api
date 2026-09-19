@@ -1,0 +1,18 @@
+{
+  "name": "pioneer-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bun test",
+    "iwp": "bun run src/cli.ts",
+    "fixture:visualize": "bun run scripts/render-six-feature-fixture.ts",
+    "fixture:explorer": "bun run scripts/render-six-feature-fixture.ts && bun run scripts/build-six-feature-explorer.ts",
+    "fixture:gemini": "bun run scripts/detect-six-feature-bubbles-gemini.ts",
+    "fixture:gemini:evaluate": "bun run scripts/evaluate-six-feature-gemini.ts"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^4.0.76",
+    "ai": "^7.0.107",
+    "zod": "^4.6.5"
+  }
+}
