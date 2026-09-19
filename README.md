@@ -6,6 +6,7 @@ API integration exploration for a quality AI automation machine and its supporti
 
 ### Start here
 
+- [Professional execution guide](docs/pioneer-professional-execution-guide.md) — corrected internal execution checklist with evidence status, approval gates, assumptions, exclusions, and acceptance tests.
 - [Booking packet](docs/pioneer-api-booking-packet.md) — one-page checklist for the discovery meeting, decisions, and items to bring.
 - [Technical brief](docs/pioneer-api-technical-brief.md) — concise explanation of the proposed problem, proof, boundaries, and next phase.
 - [Feasibility report](docs/pioneer-api-feasibility-report.md) — evidence-backed summary of the IWP-to-bubbled-image proof.
