@@ -1,10 +1,10 @@
 # Pioneer API — Billable Quote Draft
 
-**Prepared:** September 18, 2026  
-**Client:** Pioneer Circuits, Inc.  
-**Project:** IWP-to-bubbled-image quality-AI integration pilot  
-**Prepared by:** Ethan Davidson  
-**Quote status:** Draft pending billing rate, currency, and commercial terms
+- Prepared: September 18, 2026
+- Client: Pioneer Circuits, Inc.
+- Project: IWP-to-bubbled-image quality-AI integration pilot
+- Prepared by: Ethan Davidson
+- Quote status: Draft pending billing rate, currency, and commercial terms
 
 ## Proposed engagement
 
@@ -83,12 +83,12 @@ Recommended relationship treatment:
 
 A $200/hour rate would produce a $17,600 estimate and $20,000 ceiling if Pioneer’s procurement process supports a higher specialized-consulting rate. Do not select between those rates based on an assumed Pioneer budget; use the rate that reflects Ethan’s normal professional billing position and the level of access, risk, and responsibility the engagement carries.
 
-- **Billing currency:** `USD`
-- **Billing rate:** `$175/hour recommended; confirm before sending`
-- **Invoicing cadence:** `weekly or biweekly based on actual hours`
-- **Payment terms:** `[net terms]`
-- **Quote validity:** `[e.g. 30 days]`
-- **Expenses:** No travel, third-party, or infrastructure expenses are included unless approved in writing.
+- Billing currency: `USD`
+- Billing rate: `$175/hour recommended; confirm before sending`
+- Invoicing cadence: `weekly or biweekly based on actual hours`
+- Payment terms: `[net terms]`
+- Quote validity: `[e.g. 30 days]`
+- Expenses: No travel, third-party, or infrastructure expenses are included unless approved in writing.
 
 ## Assumptions
 
@@ -125,10 +125,10 @@ The pilot is complete when:
 
 ## Authorization
 
-**Client representative:** ______________________________  
-**Signature:** _________________________________________  
-**Date:** ______________________________________________
+- Client representative: ______________________________
+- Signature: _________________________________________
+- Date: ______________________________________________
 
-**Service provider:** Ethan Davidson  
-**Signature:** _________________________________________  
-**Date:** ______________________________________________
+- Service provider: Ethan Davidson
+- Signature: _________________________________________
+- Date: ______________________________________________
