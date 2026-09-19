@@ -67,7 +67,7 @@ A22 → 127
 
 ## Evidence
 
-The deterministic proof has **5 passing tests, 24 assertions, and a successful TypeScript build**. The live Gemini observation evaluation adds two adapter tests, for a current total of **7 passing tests, 26 assertions**.
+The deterministic proof has **9 passing tests, 28 assertions, and a successful TypeScript build**. The live Gemini observation evaluation is a separate integration run rather than a test fixture and has returned all six expected observations on the synthetic PNG.
 
 The proof covers:
 
