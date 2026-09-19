@@ -10,12 +10,13 @@ export function page(): string {
 </head>
 <body>
   <h1>IWP relabeling proof</h1>
-  <p>Upload an IWP source and its rasterized bubbled image. The service asks the configured vision provider for bubble observations, then applies a deterministic one-to-one geometric match before writing a UTF-16LE IWP output.</p>
-  <div class="notice"><strong>Review boundary:</strong> this is an internal synthetic-proof service. Gemini is used only for the fixture review. Do not upload Pioneer production data. The contracted provider boundary remains Pioneer-authorized Claude through GovCloud.</div>
+  <p>Upload an IWP source and its rasterized bubbled image. The service asks Google Gemini for bubble observations, then applies a deterministic one-to-one geometric match before writing a UTF-16LE IWP output.</p>
+  <div class="notice"><strong>BYOK review boundary:</strong> paste your own Google Gemini API key for this request. The demo sends it in a request header, does not store it, and does not log it. Use only synthetic fixture data over HTTPS; never upload Pioneer production data. The contracted provider boundary remains Pioneer-authorized Claude through GovCloud.</div>
   <form id="form">
     <div class="grid">
       <label>IWP source (.iwp)<input required type="file" name="iwp" accept=".iwp,application/octet-stream"></label>
       <label>Bubbled raster image<input required type="file" name="image" accept="image/png,image/jpeg,image/webp"></label>
+      <label>Google Gemini API key<input required type="password" id="apiKey" autocomplete="off" placeholder="AIza…"></label>
       <label>Vision provider<select name="provider"><option value="gemini-proof">Gemini synthetic proof</option></select></label>
       <label>Source units<select name="unit"><option value="in">inches</option><option value="mm">millimetres</option></select></label>
       <label>Match tolerance, pixels<input name="tolerance" value="90" inputmode="decimal"></label>
@@ -31,16 +32,24 @@ export function page(): string {
     const result = document.querySelector('#result');
     const details = document.querySelector('#details');
     const download = document.querySelector('#download');
-    document.querySelector('#reset').addEventListener('click', () => form.reset());
+    document.querySelector('#reset').addEventListener('click', () => { form.reset(); document.querySelector('#apiKey').value = ''; });
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       details.textContent = 'Running provider and deterministic verification…';
       result.classList.remove('hidden');
-      const response = await fetch('/api/v1/relabellings', { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-      const body = await response.json();
-      if (!response.ok) { details.textContent = JSON.stringify(body, null, 2); return; }
-      details.textContent = JSON.stringify(body.summary, null, 2);
-      download.href = 'data:application/octet-stream;base64,' + body.outputBase64;
+      const apiKey = document.querySelector('#apiKey').value.trim();
+      try {
+        const formData = new FormData(form);
+        const response = await fetch('/api/v1/relabellings', { method: 'POST', body: formData, headers: { Accept: 'application/json', 'x-google-gemini-api-key': apiKey } });
+        const body = await response.json();
+        if (!response.ok) { details.textContent = JSON.stringify(body, null, 2); return; }
+        details.textContent = JSON.stringify(body.summary, null, 2);
+        download.href = 'data:application/octet-stream;base64,' + body.outputBase64;
+      } catch (error) {
+        details.textContent = error instanceof Error ? error.message : 'Request failed';
+      } finally {
+        document.querySelector('#apiKey').value = '';
+      }
     });
   </script>
 </body>

@@ -28,6 +28,11 @@ export type DetectionImageSize = {
   width: number;
   height: number;
 };
+export function resolveGeminiApiKey(inputApiKey?: string, environmentApiKey = process.env.PIONEER_GEMINI_API_KEY): string {
+  const apiKey = inputApiKey?.trim() || environmentApiKey?.trim();
+  if (!apiKey) throw new Error("A Google Gemini API key is required");
+  return apiKey;
+}
 
 function assertNormalizedDetection(detection: GeminiBubbleDetection): void {
   if (detection.observations.length < 1 || detection.observations.length > 32) {
@@ -74,14 +79,14 @@ export async function detectBubblesWithGemini(input: {
   mediaType: "image/png" | "image/jpeg" | "image/webp";
   imageSize: DetectionImageSize;
   modelId?: string;
+  apiKey?: string;
 }): Promise<{
   detection: GeminiBubbleDetection;
   observations: BubbleObservation[];
   modelId: string;
   usage: unknown;
 }> {
-  const apiKey = process.env.PIONEER_GEMINI_API_KEY;
-  if (!apiKey) throw new Error("PIONEER_GEMINI_API_KEY is required");
+  const apiKey = resolveGeminiApiKey(input.apiKey);
   const modelId = input.modelId ?? process.env.PIONEER_GEMINI_MODEL ?? "gemini-3.6-flash";
   const google = createGoogleGenerativeAI({ apiKey });
   const result = await generateText({

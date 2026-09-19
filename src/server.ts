@@ -97,7 +97,8 @@ app.openapi(relabelRoute, async (c) => {
     const dimensions = imageDimensions(imageData, type);
     const provider = String(fields.provider ?? "gemini-proof");
     if (provider !== "gemini-proof") throw new Error("Only the Gemini synthetic-proof provider is enabled in this review service");
-    const detected = await detectBubblesWithGemini({ image: imageData, mediaType: type, imageSize: dimensions });
+    const apiKey = c.req.header("x-google-gemini-api-key")?.trim();
+    const detected = await detectBubblesWithGemini({ image: imageData, mediaType: type, imageSize: dimensions, apiKey });
     const result = rewriteIwpFromBubbles(
       iwpText,
       detected.observations,
