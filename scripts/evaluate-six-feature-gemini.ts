@@ -1,19 +1,20 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { applyTransform, normalizeFeatureAnchors, type AffineTransform } from "../src/geometry.ts";
+import { decodeIwp, encodeIwp } from "../src/iwp.ts";
+import { rewriteIwpFromBubbles } from "../src/pipeline.ts";
+import { denormalizeBubbleObservations, type GeminiBubbleDetection } from "../src/vision.ts";
 
 type GeminiResult = {
-  detection: {
-    observations: Array<{
-      number: string;
-      leaderEndpoint: { x: number; y: number };
-    }>;
-  };
+  modelId?: string;
+  detection: GeminiBubbleDetection;
+  usage?: unknown;
 };
 
 const directory = join(process.cwd(), "artifacts/six-feature-fixture");
 const inputPath = process.env.PIONEER_GEMINI_OUTPUT ?? join(directory, "04-gemini-bubbles.json");
 const outputPath = process.env.PIONEER_GEMINI_EVALUATION ?? join(directory, "05-gemini-evaluation.json");
+const rewriteOutputPath = join(directory, "05-rewritten-by-gemini.iwp");
 const canvas = { width: 1200, height: 800 };
 const raster = { width: 1800, height: 1200 };
 const transform = JSON.parse(await readFile(join(directory, "transform.json"), "utf8")) as AffineTransform;
@@ -39,29 +40,61 @@ const expected = raw.map(([sourceName, , , number], index) => {
   };
 });
 const result = JSON.parse(await readFile(inputPath, "utf8")) as GeminiResult;
-const observations = result.detection.observations;
+const observations = denormalizeBubbleObservations(result.detection, canvas);
 const expectedNumbers = new Set(expected.map((item) => item.number));
 const observedNumbers = new Set(observations.map((item) => item.number));
 const errors = expected.map((item) => {
-  const observation = observations.find((candidate) => candidate.number === item.number);
+  const observation = result.detection.observations.find((candidate) => candidate.number === item.number);
   if (!observation) return { ...item, found: false, errorPixels: null };
   const errorPixels = Math.hypot(
-    (observation.leaderEndpoint.x - item.leaderEndpoint.x) * raster.width,
-    (observation.leaderEndpoint.y - item.leaderEndpoint.y) * raster.height,
+    (observation.leaderEndpoint.x - item.leaderEndpoint.x) * canvas.width,
+    (observation.leaderEndpoint.y - item.leaderEndpoint.y) * canvas.height,
   );
   return { ...item, found: true, errorPixels };
 });
 const matched = errors.filter((item) => item.found);
-const maxErrorPixels = Math.max(...matched.map((item) => item.errorPixels ?? Infinity));
+const maxErrorPixels = matched.length === 0
+  ? Number.POSITIVE_INFINITY
+  : Math.max(...matched.map((item) => item.errorPixels ?? Infinity));
+const iwpText = decodeIwp(await readFile(join(directory, "fixture.iwp")));
+let rewrite: {
+  replacements: number;
+  mappings: Array<{ from?: string; to?: string }>;
+  envelopePreserved: boolean;
+  passed: boolean;
+};
+try {
+  const rewritten = rewriteIwpFromBubbles(iwpText, observations, transform, 80, "in");
+  const mappingPairs = rewritten.mappings.map(({ from, to }) => `${from}->${to}`).sort();
+  const expectedPairs = expected.map(({ sourceName, number }) => `${sourceName}->${number}`).sort();
+  rewrite = {
+    replacements: rewritten.replacements,
+    mappings: rewritten.mappings,
+    envelopePreserved: decodeIwp(encodeIwp(rewritten.text)) === rewritten.text,
+    passed: rewritten.replacements === expected.length && JSON.stringify(mappingPairs) === JSON.stringify(expectedPairs),
+  };
+  await Bun.write(rewriteOutputPath, encodeIwp(rewritten.text));
+} catch (error) {
+  rewrite = {
+    replacements: 0,
+    mappings: [],
+    envelopePreserved: false,
+    passed: false,
+  };
+}
 const evaluation = {
   inputPath,
-  modelId: (JSON.parse(await readFile(inputPath, "utf8")) as { modelId?: string }).modelId ?? "unknown",
+  modelId: result.modelId ?? "unknown",
+  usage: result.usage,
   expectedCount: expected.length,
   observedCount: observations.length,
   missingNumbers: expected.filter((item) => !observedNumbers.has(item.number)).map((item) => item.number),
   unexpectedNumbers: observations.filter((item) => !expectedNumbers.has(item.number)).map((item) => item.number),
   maxLeaderEndpointErrorPixels: maxErrorPixels,
-  passed: expectedNumbers.size === observedNumbers.size && errors.every((item) => item.found && (item.errorPixels ?? Infinity) <= 80),
+  rewrite,
+  passed: expectedNumbers.size === observedNumbers.size
+    && errors.every((item) => item.found && (item.errorPixels ?? Infinity) <= 80)
+    && rewrite.passed,
   errors,
 };
 await Bun.write(outputPath, JSON.stringify(evaluation, null, 2));
