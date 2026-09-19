@@ -15,6 +15,7 @@ API integration exploration for a quality AI automation machine and its supporti
 ### Technical review
 
 - [Architecture](docs/pioneer-api-architecture.mmd) — Mermaid system diagram for the proposed integration boundary.
+- [Review service](docs/pioneer-api-review-service.md) — Hono upload-service design, endpoint contract, provider boundary, and fixture instructions.
 - [Information request checklist](docs/pioneer-api-information-request-checklist.md) — questions and artifacts needed from Pioneer before production design.
 - [Acceptance and commercial terms](docs/pioneer-api-acceptance-and-commercial-terms.md) — proposed pilot acceptance criteria, change control, and commercial guardrails.
 
@@ -120,7 +121,7 @@ The next layer is now implemented in `src/geometry.ts`, `src/render.ts`, and `sr
 bun test
 ```
 
-The image number intentionally does not match the IWP name. The fixture's known transform is only test setup; the matcher receives feature coordinates and bubble boxes, then derives the source-name-to-bubble-number mapping from their positions. The production image path still needs a registration stage to estimate that transform and an AI SDK observation adapter to return structured bubble boxes, numbers, leader endpoints, and confidence. The model must not directly decide the rewrite: the deterministic layer verifies one-to-one assignments, residuals, tolerances, and ambiguity before replacing `(Name "...")` values.
+The image number intentionally does not match the IWP name. The fixture's known transform is only test setup; the matcher receives feature coordinates and bubble boxes, then derives the source-name-to-bubble-number mapping from their positions. The service now has an AI SDK/Gemini synthetic-proof observation adapter, but production still needs a registration stage to estimate the transform and a Pioneer-authorized Claude/GovCloud provider adapter. The model must not directly decide the rewrite: the deterministic layer verifies one-to-one assignments, residuals, tolerances, and ambiguity before replacing `(Name "...")` values.
 
 The current renderer intentionally supports only point anchors. Extending it to lines, circles, arcs, slots, and other InSpec geometry should reuse the same canonical-units and affine-registration contract rather than allowing each feature type to invent its own coordinate rules.
 
@@ -131,6 +132,12 @@ The current renderer intentionally supports only point anchors. Extending it to 
 - Hono
 - `@hono/zod-openapi` for request validation and OpenAPI generation
 - Google AIP-aligned resource naming, methods, pagination, and error conventions
+
+## Review service
+
+The first full-stack slice is implemented in `src/server.ts` and `src/web.ts`. It accepts `.iwp` plus a PNG/JPEG/WebP image at `POST /api/v1/relabellings`, runs the Gemini synthetic-proof detector, applies the visible affine transform, and returns a downloadable relabeled IWP. The service intentionally keeps registration parameters visible and does not claim production compatibility.
+
+Run it with `bun run service`; see [the review service guide](docs/pioneer-api-review-service.md) and [the six-feature fixture](fixtures/six-feature/README.md).
 
 ## Sources
 

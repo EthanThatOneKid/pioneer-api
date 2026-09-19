@@ -5,6 +5,7 @@
   "scripts": {
     "test": "bun test",
     "iwp": "bun run src/cli.ts",
+    "service": "bun run src/server.ts",
     "fixture:visualize": "bun run scripts/render-six-feature-fixture.ts",
     "fixture:explorer": "bun run scripts/render-six-feature-fixture.ts && bun run scripts/build-six-feature-explorer.ts",
     "fixture:gemini": "bun run scripts/detect-six-feature-bubbles-gemini.ts",
@@ -12,7 +13,9 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^4.0.76",
+    "@hono/zod-openapi": "^1.6.3",
     "ai": "^7.0.107",
+    "hono": "^4.13.8",
     "zod": "^4.6.5"
   }
 }
