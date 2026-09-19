@@ -1,0 +1,9 @@
+﻿InSpec 1 (Version 2.91.0274)
+Programs 1
+Instructions 6
+Pnt 1 F1 (Name "A17") (Pnt (0.4 0.4 0))
+Pnt 2 F2 (Name "A18") (Pnt (1.2 0.4 0))
+Pnt 3 F3 (Name "A19") (Pnt (2 0.4 0))
+Pnt 4 F4 (Name "A20") (Pnt (0.4 1.2 0))
+Pnt 5 F5 (Name "A21") (Pnt (1.2 1.2 0))
+Pnt 6 F6 (Name "A22") (Pnt (2 1.2 0))
