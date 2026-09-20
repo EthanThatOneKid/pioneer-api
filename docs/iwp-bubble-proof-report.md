@@ -18,7 +18,7 @@ A deterministic pipeline can:
 6. Match mismatched bubble numbers to source features by geometry and leader endpoint rather than by label equality or array order.
 7. Write a new IWP in which only the matched `(Name "...")` values are replaced.
 
-This report proves the mechanics with a deterministic six-feature fixture. It does **not** yet prove that the system works on a real customer bubbled PDF or with a production image model.
+The deterministic six-feature fixture demonstrates the mechanics. It does **not** yet prove that the system works on a real customer bubbled PDF or with a production image model.
 
 ## Public reference basis
 

@@ -1,6 +1,6 @@
 # Six-feature upload fixture
 
-Upload these two files to the hosted review service:
+Upload these two files to the local review service:
 
 - `source.iwp`
 - `bubbled.png`
@@ -21,3 +21,7 @@ Expected mapping, where image bubble numbers intentionally differ from IWP names
 | A22 | 127 |
 
 `transform.json` contains the known fixture transform for independent verification. The expected result is six observations, six geometric matches, six replacements, and a downloadable UTF-16LE IWP.
+
+Do not upload Pioneer production, export-controlled, or confidential data.
+
+Run the service locally with `bun run service`; see `docs/pioneer-api-review-service.md` for details.
