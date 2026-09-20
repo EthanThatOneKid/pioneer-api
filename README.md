@@ -134,9 +134,9 @@ The current renderer intentionally supports only point anchors. Extending it to 
 - `@hono/zod-openapi` for request validation and OpenAPI generation
 - Google AIP-aligned resource naming, methods, pagination, and error conventions
 
-## Public synthetic-proof demo
+## Local synthetic-proof demo
 
-[Open the hosted BYOK demo](https://pioneer-api-review-public-etok.zocomputer.io/) — bring a Google Gemini API key and use only the checked-in six-feature fixture. The application sends the key in a request header for that request and does not persist or log it. Use a restricted, disposable key and rotate it afterward; do not upload Pioneer production, export-controlled, or confidential data.
+Run the local demo with `bun run service` and the `PIONEER_GEMINI_API_KEY` environment variable. Use the checked-in six-feature fixture. The application sends the key in a request header for that request and does not persist or log it. Use a restricted, disposable key and rotate it afterward; do not upload Pioneer production, export-controlled, or confidential data.
 
 The demo uses Gemini only as the synthetic-proof vision observer. The deterministic renderer, affine matcher, IWP rewrite, and UTF-16LE preservation run in the service. The contracted application is expected to use Pioneer-authorized Claude through its GovCloud boundary.
 

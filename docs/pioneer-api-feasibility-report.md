@@ -13,7 +13,7 @@ The most immediate proof target is the quality workflow: take an InSpec Classic 
 
 The proof completed so far supports that methodology. It does not yet claim production readiness or validation against Pioneer’s real files.
 
-## Why this is a credible Pioneer use case
+## Why this appears relevant to Pioneer
 
 Pioneer Circuits publicly describes itself as a U.S. PCBA manufacturer founded in 1981, serving defense, aviation, near-Earth orbit, and space-exploration programs. Its public capabilities span engineering, manufacturing, assembly, inspection, and quality assurance.[^1]
 
