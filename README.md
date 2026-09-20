@@ -11,6 +11,7 @@ API integration exploration for a quality AI automation machine and its supporti
 - [Technical brief](docs/pioneer-api-technical-brief.md) — concise explanation of the proposed problem, proof, boundaries, and next phase.
 - [Feasibility report](docs/pioneer-api-feasibility-report.md) — evidence-backed summary of the IWP-to-bubbled-image proof.
 - [Detailed proof report](docs/iwp-bubble-proof-report.md) — implementation details, live Gemini evaluation, limitations, and remaining validation work.
+- [Terms review](https://ethanthatonekid.github.io/pioneer-api/review/) — GitHub Pages proposal page for sharing the commercial and technical terms draft.
 
 ### Technical review
 
