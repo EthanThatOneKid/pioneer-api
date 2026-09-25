@@ -31,15 +31,22 @@ Use `fixtures/six-feature/source.iwp` and `fixtures/six-feature/bubbled.png`. Th
 
 `POST /api/v1/relabellings` accepts multipart fields and a BYOK header:
 
-- `x-google-gemini-api-key`: visitor-supplied Google Gemini key; required for the hosted demo and never included in the multipart body;
+- `x-google-gemini-api-key`: visitor-supplied Google Gemini key; required on every request and never included in the multipart body;
 - `iwp`: UTF-16LE `.iwp` file;
 - `image`: PNG, JPEG, or WebP raster image;
 - `provider`: currently `gemini-proof` only;
+- `expectedCount`: optional hint for how many bubbles the drawing carries; the observer treats it as a hint rather than a target and still reports only bubbles it can read;
 - `unit`: source coordinate unit, currently `in` or `mm` in the UI;
 - `tolerance`: matching tolerance in pixels;
 - `a`, `b`, `c`, `d`, `e`, `f`: affine transform parameters.
 
-The response contains a summary, match residuals, provider usage metadata, and a base64-encoded downloadable IWP. Uploads are bounded in memory and are not persisted by this service.
+The response contains a summary, match residuals, provider usage metadata, and a base64-encoded downloadable IWP. The summary carries `modelId`, `promptVersion`, `replacements`, `observations`, `matches`, and the provider `usage`, so a review record can name the exact prompt version that produced each observation. Uploads are bounded in memory and are not persisted by this service.
+
+## Detector prompt
+
+The observation prompt is drawing-agnostic. It states no bubble count, colour, or fixture layout, and it instructs the observer not to assume a fixed count or invent a bubble to reach a total. A caller may pass `expectedCount` as a hint, which is recorded in the prompt but never used as a target.
+
+The deterministic layer, not the prompt, enforces the count contract: `matchBubblesToFeatures` still requires exactly one bubble per renderable feature and fails closed with a count diagnostic when the observer misses or invents one.
 
 ## Known boundary
 

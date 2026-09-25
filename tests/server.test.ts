@@ -11,6 +11,7 @@ describe("Hono review service", () => {
     expect(openapi.status).toBe(200);
     const document = await openapi.json();
     expect(document.paths["/api/v1/relabellings"].post).toBeDefined();
+    expect(document.components.schemas.RelabelSummary.properties.promptVersion).toBeDefined();
   });
 
   test("rejects incomplete uploads with a structured error", async () => {

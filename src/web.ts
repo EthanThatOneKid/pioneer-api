@@ -19,6 +19,7 @@ export function page(): string {
       <label>Google Gemini API key<input required type="password" id="apiKey" autocomplete="off" placeholder="AIza…"></label>
       <label>Vision provider<select name="provider"><option value="gemini-proof">Gemini synthetic proof</option></select></label>
       <label>Source units<select name="unit"><option value="in">inches</option><option value="mm">millimetres</option></select></label>
+      <label>Expected bubble count (optional)<input name="expectedCount" inputmode="numeric" placeholder="detect all visible"></label>
       <label>Match tolerance, pixels<input name="tolerance" value="90" inputmode="decimal"></label>
     </div>
     <fieldset><legend>Image registration transform</legend><p>For this proof fixture the transform is supplied by the generated fixture metadata. Production registration estimation is a separate acceptance step.</p><div class="grid">

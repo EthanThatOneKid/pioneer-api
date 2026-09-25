@@ -29,14 +29,16 @@ const result = await detectBubblesWithGemini({
   image,
   mediaType: "image/png",
   imageSize: await imageSize(imagePath),
+  apiKey: process.env.PIONEER_GEMINI_API_KEY,
 });
 await mkdir(dirname(outputPath), { recursive: true });
 await Bun.write(outputPath, JSON.stringify({
   imagePath,
   outputPath,
   modelId: result.modelId,
+  promptVersion: result.promptVersion,
   usage: result.usage,
   detection: result.detection,
   observations: result.observations,
 }, null, 2));
-console.log(JSON.stringify({ outputPath, modelId: result.modelId, count: result.observations.length, usage: result.usage }, null, 2));
+console.log(JSON.stringify({ outputPath, modelId: result.modelId, promptVersion: result.promptVersion, count: result.observations.length, usage: result.usage }, null, 2));

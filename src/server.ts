@@ -17,6 +17,7 @@ const healthSchema = z.object({ service: z.string(), status: z.literal("ok") }).
 const relabelSummarySchema = z.object({
   provider: z.string(),
   modelId: z.string(),
+  promptVersion: z.string(),
   replacements: z.number(),
   observations: z.number(),
   matches: z.array(z.object({ from: z.string(), to: z.string(), distancePx: z.number() })),
@@ -45,6 +46,14 @@ const relabelRoute = createRoute({
     500: { content: { "application/json": { schema: errorSchema } }, description: "Processing failure" },
   },
 });
+
+function parseOptionalCount(fields: Record<string, unknown>, key: string): number | undefined {
+  const raw = fields[key];
+  if (raw === undefined || raw === null || String(raw).trim() === "") return undefined;
+  const value = Math.trunc(Number(raw));
+  if (!Number.isFinite(value) || value < 1) throw new Error(`Invalid numeric field: ${key}`);
+  return value;
+}
 
 function parseNumber(fields: Record<string, unknown>, key: string, fallback: number): number {
   const value = Number(fields[key] ?? fallback);
@@ -98,7 +107,13 @@ app.openapi(relabelRoute, async (c) => {
     const provider = String(fields.provider ?? "gemini-proof");
     if (provider !== "gemini-proof") throw new Error("Only the Gemini synthetic-proof provider is enabled in this review service");
     const apiKey = c.req.header("x-google-gemini-api-key")?.trim();
-    const detected = await detectBubblesWithGemini({ image: imageData, mediaType: type, imageSize: dimensions, apiKey });
+    const detected = await detectBubblesWithGemini({
+      image: imageData,
+      mediaType: type,
+      imageSize: dimensions,
+      apiKey,
+      expectedCount: parseOptionalCount(fields, "expectedCount"),
+    });
     const result = rewriteIwpFromBubbles(
       iwpText,
       detected.observations,
@@ -111,6 +126,7 @@ app.openapi(relabelRoute, async (c) => {
       summary: {
         provider: "gemini-proof",
         modelId: detected.modelId,
+        promptVersion: detected.promptVersion,
         replacements: result.replacements,
         observations: detected.observations.length,
         matches: result.matches.map((match) => ({ from: match.feature.sourceName, to: match.bubble.number, distancePx: Number(match.distance.toFixed(3)) })),

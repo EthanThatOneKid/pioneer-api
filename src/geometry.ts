@@ -158,7 +158,11 @@ export function matchBubblesToFeatures(
   ambiguityRatio = 0.02,
 ): BubbleMatch[] {
   if (features.length === 0 || features.length !== bubbles.length) {
-    throw new Error(`Could not establish a one-to-one bubble match: ${features.length} features, ${bubbles.length} bubbles`);
+    const difference = Math.abs(features.length - bubbles.length);
+    const cause = bubbles.length > features.length
+      ? `${difference} more bubbles than features, so the detector may have reported a bubble twice or invented one`
+      : `${difference} fewer bubbles than features, so the detector may have missed one`;
+    throw new Error(`Could not establish a one-to-one bubble match: ${features.length} features, ${bubbles.length} bubbles (${cause})`);
   }
   const projected = features.map((feature) => applyTransform(worldToImage, feature.point));
   const costs = projected.map((point) => bubbles.map((bubble) => {

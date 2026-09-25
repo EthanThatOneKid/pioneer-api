@@ -105,6 +105,14 @@ The model input is rasterized PNG. SVG remains the inspectable, deterministic ve
 
 This is **not** evidence of production accuracy: the image is clean, generated, known in advance, and contains only six point features. The result does establish a live model-backed observation path and a measurable evaluation harness.
 
+### Prompt generality re-check (2026-09-25)
+
+The first live evaluation used a fixture-specific prompt that described its own image ("six orange numbered bubbles, gray leader lines, and six black geometry features"). That wording named the answer: it biased the observer toward six bubbles and would have misdescribed any other drawing. The prompt is now count-agnostic, recorded as `promptVersion` `iwp-bubble-detector/2`, and the expected bubble count is an optional caller hint rather than a literal sentence in the prompt.
+
+Re-running the same fixture and the same evaluator with the new prompt returned six observations, no missing and no unexpected numbers, the exact `A17`–`A22` → `705`, `102`, `991`, `314`, `808`, `127` mapping, six replacements with the UTF-16LE envelope preserved, and a maximum leader-endpoint error of 2.00 px in the 1200×800 canvas.
+
+The same re-check exposed a budget that no longer fits: the observation call spent 1,998 output tokens (1,302 of them reasoning) on the first run and 2,314 (1,613 reasoning) on the second, against a hard-coded `maxOutputTokens` of 2,048. Reasoning tokens grow with the bubble count, so a real drawing would have truncated the response. The budget is now the named `MAX_DETECTOR_OUTPUT_TOKENS` of 8,192, and a count-proportional budget is the better production shape. This is a budget fix, not evidence about accuracy on real drawings.
+
 ## What has not yet been proven
 
 ### 1. No real customer-image evaluation yet
@@ -119,7 +127,11 @@ The fixture supplies the affine transform as test setup. It does not yet estimat
 
 The current deterministic renderer faithfully supports point anchors for the proof. It does not yet fully decode and render every IWP feature type or every `Sys`/`PCS`/`Nom` transform. Lines, circles, arcs, ellipses, rectangles, slots, splines, and 3D projection still need implementation and comparison against the official validation programs.
 
-### 4. No real bubbled source pair
+### 4. General-drawing scale is unproven
+
+The observer no longer assumes a count, colour, or layout, but a single call still accepts at most 32 observations, and the ambiguity check re-solves the whole global assignment once per row on top of an O(n³) solve, so its cost grows as O(n⁴). A drawing with hundreds of bubbles needs a cheaper ambiguity test before this slice is production-shaped.
+
+### 5. No real bubbled source pair
 
 The public Micro-Vu validation PDFs are validation reports, not the customer-style bubbled drawing/image required for the final proof. No real Pioneer sample has been used because clearance is still pending.
 
@@ -158,7 +170,7 @@ The next decisive milestone is a cleared bubbled-image benchmark: render a corre
 - `file src/geometry.ts` — units, affine transforms, leader-endpoint matching, and mapping generation
 - `file src/render.ts` — deterministic point rendering and fixture SVG generation
 - `file src/pipeline.ts` — match-to-rewrite orchestration
-- `file src/vision.ts` — AI SDK/Google structured bubble detection and normalized coordinate validation
+- `file src/vision.ts` — AI SDK/Google structured bubble detection, drawing-agnostic prompt versioning, and normalized coordinate validation
 - `file tests/fixture.e2e.test.ts` — deterministic six-feature proof
 - `file tests/vision.test.ts` — structured-output adapter tests
 - `file scripts/render-six-feature-fixture.ts` — visual fixture generation
