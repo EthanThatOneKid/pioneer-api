@@ -40,7 +40,7 @@ Use `fixtures/six-feature/source.iwp` and `fixtures/six-feature/bubbled.png`. Th
 - `tolerance`: matching tolerance in pixels;
 - `a`, `b`, `c`, `d`, `e`, `f`: affine transform parameters.
 
-The response contains a summary, match residuals, provider usage metadata, and a base64-encoded downloadable IWP. The summary carries `modelId`, `promptVersion`, `replacements`, `observations`, `matches`, and the provider `usage`, so a review record can name the exact prompt version that produced each observation. Uploads are bounded in memory and are not persisted by this service.
+The response contains a summary, match residuals, provider usage metadata, and a base64-encoded downloadable IWP. The summary carries `modelId`, `promptVersion`, `replacements`, `observations`, `matches`, and the provider `usage`, so a review record can name the exact prompt version that produced each observation; the detector prompt itself is a reviewable markdown file at [`src/prompts/iwp-bubble-detector.md`](../src/prompts/iwp-bubble-detector.md), and its frontmatter `version` is the value reported here. Uploads are bounded in memory and are not persisted by this service.
 
 ## Detector prompt
 

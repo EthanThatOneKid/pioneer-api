@@ -1,5 +1,8 @@
 import { expect, test } from "bun:test";
+import { readFileSync } from "node:fs";
 import {
+  DETECTOR_PROMPT_GUIDANCE,
+  DETECTOR_PROMPT_PATH,
   DETECTOR_PROMPT_VERSION,
   MAX_DETECTED_BUBBLES,
   MAX_DETECTOR_OUTPUT_TOKENS,
@@ -56,6 +59,16 @@ test("detector prompt is drawing-agnostic and carries no fixture literals", () =
 test("detector prompt states an expected count only when the caller supplies one", () => {
   expect(buildBubbleDetectionPrompt()).not.toContain("expected to carry about");
   expect(buildBubbleDetectionPrompt({ expectedCount: 42 })).toContain("expected to carry about 42 bubbles");
+});
+
+test("loads the detector prompt from its markdown file rather than the source", () => {
+  const source = readFileSync(DETECTOR_PROMPT_PATH, "utf8");
+  expect(DETECTOR_PROMPT_PATH.endsWith("prompts/iwp-bubble-detector.md")).toBe(true);
+  expect(source.startsWith("---\nname: iwp-bubble-detector\nversion:")).toBe(true);
+  expect(source).toContain("engineering drawing");
+  const flattened = DETECTOR_PROMPT_GUIDANCE.split("\n").filter((line) => line.trim().length > 0).join(" ");
+  expect(buildBubbleDetectionPrompt()).toContain(flattened);
+  expect(buildBubbleDetectionPrompt({ expectedCount: 6 })).toContain(DETECTOR_PROMPT_GUIDANCE.split("\n")[0]);
 });
 
 test("exposes a prompt version, bubble budget, and output budget", () => {

@@ -2,6 +2,9 @@ import { generateText, Output } from "ai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { z } from "zod";
 import type { BubbleObservation } from "./ocr.ts";
+import { buildBubbleDetectionPrompt, DETECTOR_PROMPT_VERSION } from "./prompt.ts";
+
+export * from "./prompt.ts";
 
 const normalizedObservationSchema = z.object({
   number: z.string(),
@@ -28,29 +31,10 @@ export type DetectionImageSize = {
   width: number;
   height: number;
 };
-export const DETECTOR_PROMPT_VERSION = "iwp-bubble-detector/2";
 
 export const MAX_DETECTED_BUBBLES = 32;
 
 export const MAX_DETECTOR_OUTPUT_TOKENS = 8192;
-
-export function buildBubbleDetectionPrompt(options: { expectedCount?: number } = {}): string {
-  const guidance = [
-    "Detect every numbered bubble annotation in this engineering drawing image.",
-    "Report the number printed inside each bubble, the normalized bounding box of the bubble, and the normalized point where that bubble's leader line touches the feature it annotates.",
-    "Coordinates must be normalized to the full image: x = horizontal fraction, y = vertical fraction, origin at the top-left.",
-    "The leader endpoint is not the bubble center: follow the leader line to the feature it points at.",
-    "Return the digits of each bubble label only, without any surrounding text.",
-    "Report each visible bubble exactly once. The number of bubbles varies by drawing, so do not assume a fixed count and do not invent a bubble to reach an expected total.",
-    "Bubbles are not a fixed colour, size, or shape and may be partially occluded or overlapped by drawing content, so do not rely on any single visual style.",
-    "Do not read, infer, or copy labels from any source file; report only text that is visible in the image.",
-    "Preserve no ordering assumption, and lower confidence when the label or the leader endpoint is uncertain.",
-  ];
-  if (options.expectedCount !== undefined) {
-    guidance.splice(1, 0, `This drawing is expected to carry about ${options.expectedCount} bubbles; treat that as a hint, not a target.`);
-  }
-  return guidance.join(" ");
-}
 
 export function resolveGeminiApiKey(inputApiKey?: string): string {
   const apiKey = inputApiKey?.trim();

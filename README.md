@@ -138,9 +138,13 @@ The current renderer intentionally supports only point anchors. Extending it to 
 
 Run the local demo with `bun run service` and paste a Google Gemini API key into the review page, which sends it as the `x-google-gemini-api-key` request header for that request only; the service has no server-side key fallback and does not persist or log the key. Use the checked-in six-feature fixture. Use a restricted, disposable key and rotate it afterward; do not upload Pioneer production, export-controlled, or confidential data.
 
+The detector prompt is not hard-coded in the TypeScript: it lives in [`src/prompts/iwp-bubble-detector.md`](src/prompts/iwp-bubble-detector.md) with `name`/`version`/`description` frontmatter, is loaded by `src/prompt.ts`, and its version is reported as `promptVersion` in every response. Edit that markdown file and bump `version` to change detector behavior.
+
 The demo uses Gemini only as the synthetic-proof vision observer. The deterministic renderer, affine matcher, IWP rewrite, and UTF-16LE preservation run in the service. The contracted application is expected to use Pioneer-authorized Claude through its GovCloud boundary.
 
 ## Review service
+
+The bubble-observation prompt is not embedded in the source. It lives in `src/prompts/iwp-bubble-detector.md` and is read at call time by `src/prompt.ts`; the file's frontmatter `version` becomes the `promptVersion` reported in every response, so editing the wording and bumping the version happen in one file.
 
 The first full-stack slice is implemented in `src/server.ts` and `src/web.ts`. It accepts `.iwp` plus a PNG/JPEG/WebP image at `POST /api/v1/relabellings`, runs the Gemini synthetic-proof detector, applies the visible affine transform, and returns a downloadable relabeled IWP. The service intentionally keeps registration parameters visible and does not claim production compatibility.
 
