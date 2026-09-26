@@ -1,4 +1,4 @@
-﻿InSpec 1 (Version 2.91.0274)
+InSpec 1 (Version 2.91.0274)
 Programs 1
 Instructions 6
 Pnt 1 F1 (Name "A17") (Pnt (0.4 0.4 0))
