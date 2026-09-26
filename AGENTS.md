@@ -19,7 +19,7 @@ Synthetic-proof slice for the Pioneer Circuits IWP bubble-relabeling engagement:
 - Keep it drawing-agnostic: no fixture literals (colour, size, expected count, "orange", "six"), and no instruction to read labels from the source file. `tests/vision.test.ts` asserts this.
 - Frontmatter is `name` / `version` / `description`; the body below the closing `---` is the guidance, one instruction per paragraph, joined into one line at runtime.
 - The optional expected bubble count is a caller hint (`expectedCount`), inserted at runtime — never written into the file as a fixed number.
-- `prompts/iwp-bubble-detector.md` at the repository root is a legacy copy that predates `src/prompts/`. Do not read, edit, or re-point anything at it; the loaded prompt is `src/prompts/iwp-bubble-detector.md`.
+- There is exactly one prompt file: `src/prompts/iwp-bubble-detector.md`. A duplicate `prompts/iwp-bubble-detector.md` sat at the repository root for part of 2026-09-25 and was removed the same day; do not recreate it. Nothing loads it, and a second copy of the wording is how the file and the reported `promptVersion` drift apart.
 
 ## Verification
 
