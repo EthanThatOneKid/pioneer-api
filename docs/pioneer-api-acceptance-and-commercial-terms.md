@@ -2,30 +2,32 @@
 
 **Status:** Draft for negotiation; not legal advice.
 
-## Effort and ceiling
+## Fee structure
 
-- Rate: **$175/hour**.
-- Planned effort: **88 hours**.
-- Authorized contingency: **12 hours**, used only for approved in-scope uncertainty or written change work.
-- Not-to-exceed ceiling: **$17,500** without a signed change order.
-- The estimate is conditional on one approved real source IWP and bubbled PDF/PNG pair. It is not a production-success guarantee.
+- Pilot fee: **$8,500 fixed**, billed as the five milestone payments below and released when each milestone is accepted.
+- Nominal planning basis: about **74 hours** at **$115/hour**. The pilot is offered at a reduced first-engagement rate; the milestone payments, not hours worked, are the contract basis.
+- Contingency and approved additional work: **$115/hour**, up to **$1,500 (about 13 hours)**, only for approved in-scope uncertainty or written change work.
+- Not-to-exceed ceiling: **$10,000** without a signed change order.
+- The fee is conditional on one approved real source IWP and bubbled PDF/PNG pair. It is not a production-success guarantee.
 
 ## Milestones
 
-| Milestone | Hours | Acceptance artifact |
+| Milestone | Payment | Deliverable that triggers payment |
 | --- | ---: | --- |
-| Discovery and integration boundary | 12 | Integration-boundary brief, information gaps, approved feature/scope matrix |
-| IWP parser and safe writer | 20 | Tests and sample outputs showing encoding/line-ending preservation and safe replacements |
-| Renderer and registration | 24 | SVG/PNG review artifacts, transform method, residual/tolerance report |
-| Vision detection and evaluation | 20 | Structured observations, provider record, evaluation metrics, ambiguity results |
-| Real-pair evaluation, audit, and handoff | 12 | Read-only real-pair result, audit manifest, proposed output, runbook, handoff review |
-| **Planned total** | **88** |  |
-| **Contingency authorization** | **12** | Only with written approval or agreed change order |
-| **Maximum authorized total** | **100** | **$17,500 ceiling** |
+| 1. Discovery | $1,155 | Interface inventory, data ownership map, security constraints and draft API model |
+| 2. IWP parser | $1,935 | Sample IWP round-trips with no change to encoding, line endings or non-target content |
+| 3. Rendering and registration | $2,320 | Feature subset rendered into a reviewable canonical image, registration working |
+| 4. Vision and matching | $1,935 | Structured bubble observations; one-to-one matches with residuals and confidence gates |
+| 5. Evaluation and handoff | $1,155 | Rewritten IWP, audit manifest, review report, API contract, runbook, Phase 2 recommendation |
+| **Pilot total** | **$8,500** |  |
+| **Contingency authorization** | Up to **$1,500** | Up to 13 hours at $115/hour, only with written approval or an agreed change order |
+| **Maximum authorized total** | **$10,000** | **Not-to-exceed ceiling** |
+
+Each milestone’s acceptance artifact is the deliverable named above, evidenced by the repository artifacts and a written summary at handoff. Milestone 5 includes the final invoice, the audit manifest, and the handoff review.
 
 ## Invoicing recommendation
 
-Use milestone or biweekly invoices with hours and deliverables itemized. A practical starting position is invoicing at completion of each accepted milestone, with the final invoice including the audit manifest and handoff. Net-15 or Net-30, reimbursable expenses, taxes, and payment method remain procurement decisions and should be written into the final agreement.
+Invoice each milestone on acceptance, with the accepted deliverable itemized, and hold the final invoice until the audit manifest and handoff review are accepted. Net-15 or Net-30, reimbursable expenses, taxes, and payment method remain procurement decisions and should be written into the final agreement.
 
 ## Acceptance
 

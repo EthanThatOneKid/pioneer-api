@@ -24,16 +24,27 @@ The pilot is deliberately narrower than a production deployment. It does not pro
 6. Produce a relabeled IWP only after human review and an audit manifest.
 7. Deliver an API contract, runbook, limitations, and recommendation for any production phase.
 
-### Expected effort and pricing
+### Milestone schedule and pricing
 
-- **Planning estimate:** 88 engineering hours.
-- **Authorized ceiling:** **[REDACTED — commercial ceiling to be confirmed]**.
-- **Billing rate:** **[REDACTED — rate to be confirmed before sending a formal quote]**.
-- **Invoicing cadence:** **[FLAGGED — weekly or biweekly, subject to agreement]**.
+The pilot is priced as five fixed milestone payments. Each payment is released when the deliverable named for that milestone is accepted.
+
+| Milestone | Deliverable that triggers payment | Payment |
+| --- | --- | ---: |
+| 1. Discovery | Interface inventory, data ownership map, security constraints and draft API model | $1,155 |
+| 2. IWP parser | Sample IWP round-trips with no change to encoding, line endings or non-target content | $1,935 |
+| 3. Rendering and registration | Feature subset rendered into a reviewable canonical image, registration working | $2,320 |
+| 4. Vision and matching | Structured bubble observations; one-to-one matches with residuals and confidence gates | $1,935 |
+| 5. Evaluation and handoff | Rewritten IWP, audit manifest, review report, API contract, runbook, Phase 2 recommendation | $1,155 |
+| **Pilot total** | | **$8,500** |
+| Contingency | Up to $115/hour (about 13 hours), written approval required | Up to **$1,500** |
+| **Not-to-exceed** | Pilot total plus contingency | **$10,000** |
+
+- **Nominal basis:** about 74 hours at $115/hour. The milestone payments, not hours worked, are the contract basis.
+- **Invoicing cadence:** **[FLAGGED — invoice on acceptance of each milestone; confirm whether Pioneer prefers that or another cadence]**.
 - **Payment terms:** **[FLAGGED — Pioneer to confirm Net-15, Net-30, or another term]**.
 - **Quote validity:** **[FLAGGED — Ethan to specify, e.g. 30 days]**.
 
-The estimate is a planning boundary, not a promise that a production integration can be completed within that effort. Work beyond the agreed ceiling or outside the scope below would require written approval.
+The pilot fee is a fixed price for the five deliverables above. It is not a promise that a production integration can be completed within the same effort, and work beyond the milestone scope or the $10,000 ceiling would require written approval.
 
 ## Provider and security boundary
 

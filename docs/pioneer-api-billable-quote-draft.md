@@ -1,10 +1,11 @@
 # Pioneer API — Billable Quote Draft
 
 - Prepared: September 18, 2026
+- Revised: October 2, 2026 — reduced to a fixed-price milestone schedule
 - Client: Pioneer Circuits, Inc.
 - Project: IWP-to-bubbled-image quality-AI integration pilot
 - Prepared by: Ethan Davidson
-- Quote status: Draft pending billing rate, currency, and commercial terms
+- Quote status: Draft pending currency, payment terms, and quote validity
 
 ## Proposed engagement
 
@@ -18,11 +19,13 @@ The engagement is intended to answer one practical question:
 
 This is a first engagement with credible follow-on potential. The problem is tied directly to Pioneer’s production bottleneck: manual cross-referencing between bubbled drawings, inspection priorities, and IWP feature labels. The pilot should therefore be priced as specialized engineering and validation work, not as a small OCR script, while remaining tightly bounded and reviewable.
 
-The 88-hour estimate and authorization up to 100 hours are a fair pilot boundary because they cover discovery, proprietary-format handling, geometry/rendering work, model evaluation, registration risk, audit output, and handoff. The quote should not promise a production-ready system or guaranteed accuracy before an approved real pair is evaluated.
+The pilot is offered as a **fixed-price, milestone-billed engagement at $8,500**, down from the original time-and-materials position of 88 hours at $175/hour ($15,400, with a $17,500 ceiling). The reduced total is a first-engagement accommodation: it prices the pilot against a nominal plan of about 74 hours at $115/hour, and it holds the work to the five milestone deliverables below.
+
+The reduction lowers the price, not the technical answer the pilot must produce. Contingency work above the milestone scope — approved in-scope uncertainty or written change work — is billed at **$115/hour**, capped at **$1,500 (about 13 hours)** with written approval, for a **$10,000 not-to-exceed total**. Production integration, broader feature coverage, and any further Pioneer-specific provider work should be quoted separately at the standard professional rate once the pilot verdict is in. The quote should not promise a production-ready system or guaranteed accuracy before an approved real pair is evaluated.
 
 Recommended relationship treatment:
 
-- Keep the normal professional billing rate rather than discounting the technical work because this is a first contract.
+- Price the pilot as a fixed-fee milestone schedule, and reserve the normal professional hourly rate for contingency, change orders, and Phase 2 implementation work.
 - If desired, offer a one-time credit against a separately authorized Phase 2 implementation after the pilot is accepted; do not make that credit part of the pilot’s technical scope.
 - Do not use a success fee or production-throughput guarantee until Pioneer provides real data and the operational baseline is measurable.
 
@@ -34,61 +37,58 @@ Recommended relationship treatment:
    - security, network, retention, and approval constraints;
    - proposed API resource and event model.
 
-2. **IWP processing layer**
+2. **IWP parser and safe writer**
    - UTF-16LE/CRLF-safe parser and writer;
    - canonical millimetre geometry model;
-   - agreed feature subset and coordinate-system handling;
-   - deterministic SVG/PNG rendering for review;
-   - rasterized PNG input for vision inference, with SVG retained as the inspectable vector artifact.
+   - agreed feature subset and coordinate-system handling.
 
-3. **Vision and matching layer**
+3. **Rendering and registration**
+   - deterministic SVG/PNG rendering for review;
+   - rasterized PNG input for vision inference, with SVG retained as the inspectable vector artifact;
+   - source-to-image registration for the agreed feature subset, reported with residuals.
+
+4. **Vision and matching**
    - AI SDK provider abstraction with Google Gemini for the synthetic proof and Pioneer-provided Claude through GovCloud as the contracted application target;
    - structured bubble numbers, boxes, leader endpoints, and confidence;
    - affine/projective registration and one-to-one geometric matching;
    - residual, ambiguity, and confidence gates.
 
-4. **Controlled evaluation**
+5. **Evaluation and handoff**
    - one approved real source-IWP/bubbled-image pair;
    - detected-bubble and proposed-mapping report;
    - rewritten IWP produced only after reviewable evidence;
-   - audit manifest with input hashes, model metadata, transform, residuals, and decisions.
+   - audit manifest with input hashes, model metadata, transform, residuals, and decisions;
+   - API contract draft, implementation notes and runbook, limitations, follow-up backlog, and production-readiness recommendation.
 
-5. **Handoff**
-   - API contract draft;
-   - implementation notes and runbook;
-   - limitations, follow-up backlog, and production-readiness recommendation.
+## Milestone payment schedule
 
-## Estimated effort
+The pilot is billed as five fixed payments, each released when its deliverable is accepted. Hours worked are not the billing basis for the milestones.
 
-| Work package | Estimated hours |
-| --- | ---: |
-| Discovery, interface inventory, and data contract | 12 |
-| IWP parser, canonical geometry, and safe writer | 20 |
-| Renderer and registration foundation | 24 |
-| Structured vision detection and evaluation harness | 20 |
-| Approved-pair evaluation, audit output, and handoff | 12 |
-| **Estimated total** | **88** |
-
-**Commercial recommendation:** authorize up to **100 hours** for this pilot. Work beyond 100 hours, production integration, or material scope changes requires written approval before proceeding.
-
-## Pricing
-
-| Item | Formula | Amount |
+| Milestone | Deliverable that triggers payment | Payment |
 | --- | --- | ---: |
-| Pilot services | `88 hours × $175/hour` | **$15,400** |
-| Contingency authorization | Up to `12 additional hours × $175/hour` | **$2,100** |
-| **Estimated pilot fee** | `88–100 hours × $175/hour` | **$15,400–$17,500** |
+| 1. Discovery | Interface inventory, data ownership map, security constraints and draft API model | **$1,155** |
+| 2. IWP parser | Sample IWP round-trips with no change to encoding, line endings or non-target content | **$1,935** |
+| 3. Rendering and registration | Feature subset rendered into a reviewable canonical image, registration working | **$2,320** |
+| 4. Vision and matching | Structured bubble observations; one-to-one matches with residuals and confidence gates | **$1,935** |
+| 5. Evaluation and handoff | Rewritten IWP, audit manifest, review report, API contract, runbook, Phase 2 recommendation | **$1,155** |
+| **Pilot total** | | **$8,500** |
+| Contingency | Up to $115/hour (about 13 hours), written approval required | Up to **$1,500** |
+| **Not-to-exceed** | Pilot total plus contingency | **$10,000** |
 
-**Recommended commercial position:** quote the work at **$175/hour**, estimate **$15,400**, and authorize a **$17,500 not-to-exceed ceiling**. Bill actual hours, and require written approval before exceeding the ceiling or adding production scope. This is a first-engagement accommodation without discounting the specialized engineering work.
+**Commercial position:** quote the pilot at **$8,500 fixed**, payable per accepted milestone, with contingency up to **$1,500** and a **$10,000 not-to-exceed ceiling**. This schedule replaces the earlier 88-hour / $175-hour time-and-materials quote; the $8,500 corresponds to roughly 74 hours at the $115/hour rate used for contingency and approved additional work.
 
-A $200/hour rate would produce a $17,600 estimate and $20,000 ceiling if Pioneer’s procurement process supports a higher specialized-consulting rate. Do not select between those rates based on an assumed Pioneer budget; use the rate that reflects Ethan’s normal professional billing position and the level of access, risk, and responsibility the engagement carries.
+**Phase 2:** production integration, broader feature coverage, and deployment support are out of this quote and should be estimated at the standard professional rate after the pilot verdict.
 
 - Billing currency: `USD`
-- Billing rate: `$175/hour recommended; confirm before sending`
-- Invoicing cadence: `weekly or biweekly based on actual hours`
+- Pilot fee: `$8,500 fixed, invoiced per accepted milestone`
+- Contingency and approved additional work: `$115/hour; up to 13 hours / $1,500 with written approval`
+- Not-to-exceed: `$10,000`
+- Invoicing cadence: `on acceptance of each milestone`
 - Payment terms: `[net terms]`
 - Quote validity: `[e.g. 30 days]`
 - Expenses: No travel, third-party, or infrastructure expenses are included unless approved in writing.
+
+The milestone payments are the contract basis. Any hours figure in this document is a planning note, not a basis for recomputing the fee.
 
 ## Assumptions
 
@@ -122,6 +122,8 @@ The pilot is complete when:
 4. the matcher reports one-to-one assignments, transform residuals, and confidence gates;
 5. the rewritten IWP, audit manifest, and human-review report are produced;
 6. Pioneer receives a recommendation for the next production-integration phase.
+
+Acceptance of each milestone deliverable releases that milestone’s payment. Corrections to a defect inside an accepted milestone’s scope are included in the fee; new features, new systems, new geometries, new environments, or production deployment require a written change order priced at $115/hour inside the contingency, and beyond it only with a signed change order.
 
 ## Authorization
 

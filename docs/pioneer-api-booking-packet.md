@@ -5,10 +5,10 @@
 ## Commercial proposal at a glance
 
 - **Engagement:** A controlled pilot to evaluate and implement the integration boundary between Pioneer’s machine/software workflow and the agreed Pioneer systems.
-- **Rate:** $175/hour.
-- **Planned effort:** 88 hours.
-- **Authorized contingency:** 12 additional hours only for approved in-scope uncertainty or change work.
-- **Not-to-exceed ceiling:** $17,500 without a signed change order.
+- **Pilot fee:** $8,500 fixed, billed as five milestone payments ($1,155 / $1,935 / $2,320 / $1,935 / $1,155), each released when its deliverable is accepted.
+- **Nominal basis:** about 74 hours at $115/hour; the milestone payments, not hours worked, are the contract basis.
+- **Authorized contingency:** up to $1,500 (about 13 hours) at $115/hour, only for approved in-scope uncertainty or change work with written approval.
+- **Not-to-exceed ceiling:** $10,000 without a signed change order.
 - **Condition:** The quote depends on receiving one approved real `source.iwp` plus corresponding bubbled PDF/PNG pair. It does not guarantee production success before that validation.
 - **Provider boundary:** Synthetic proof uses Google Gemini through AI SDK. Real Pioneer data uses only Pioneer-authorized Claude through GovCloud, subject to Pioneer’s security approval.
 
@@ -34,7 +34,7 @@
 - Network boundary: local-only, VPN, private cloud, or authorized outbound service.
 - Required retention, audit, export-control, and customer-data handling rules.
 - Acceptance criteria for the pilot and who signs acceptance.
-- Whether Pioneer wants a fixed milestone invoice schedule or time-and-materials invoicing within the ceiling.
+- Confirmation of the fixed milestone payment schedule and who accepts each milestone.
 
 ## Do not promise at booking
 

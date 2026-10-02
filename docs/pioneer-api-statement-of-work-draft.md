@@ -38,11 +38,11 @@ The pilot will determine whether an approved source IWP program and correspondin
 
 ## 6. Schedule and acceptance
 
-The parties will use the milestone schedule in `pioneer-api-acceptance-and-commercial-terms.md`. A milestone is accepted when the named artifacts are delivered and the Client approver either signs acceptance or does not identify a material nonconformance within the agreed review period. Rejected work receives a documented correction cycle within the remaining authorized hours; new requirements use a change order.
+The parties will use the five-milestone schedule in `pioneer-api-acceptance-and-commercial-terms.md`. A milestone is accepted when the deliverable named for it is delivered and the Client approver either signs acceptance or does not identify a material nonconformance within the agreed review period. Each accepted milestone triggers its fixed payment. Rejected work receives a documented correction cycle within the remaining authorized contingency; new requirements use a change order.
 
 ## 7. Fees and changes
 
-Fees, invoicing, the $175/hour rate, the 88-hour planned estimate, the 12-hour authorized contingency, and the $17,500 ceiling are defined in the billable quote and commercial-terms draft. No work above the ceiling or outside scope begins without written approval.
+The pilot fee, the five milestone payments, the contingency authorization, and the not-to-exceed ceiling are defined in the billable quote and commercial-terms draft: **$8,500** for the five accepted milestones, contingency up to **$1,500** at **$115/hour** (about 13 hours) with written approval, and a **$10,000** ceiling. The milestone payments are fixed and are not recomputed from hours worked. No work above the ceiling or outside scope begins without written approval.
 
 ## 8. Ownership and confidentiality
 
