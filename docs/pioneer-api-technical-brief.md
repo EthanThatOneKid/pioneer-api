@@ -4,7 +4,7 @@
 
 A deterministic six-feature fixture proves the core method: parse a UTF-16LE IWP file, convert supported point geometry into canonical units, render inspectable SVG and rasterized PNG, detect mismatched bubble numbers with Google Gemini through AI SDK, register observations into the renderer’s coordinate space, match features one-to-one, and rewrite only the selected IWP `(Name "...")` values.
 
-The live synthetic run detected all six expected bubbles with zero missing and zero unexpected labels. The maximum leader-endpoint error was 2.56 pixels in the 1200×800 SVG canvas. The deterministic suite currently passes 9 tests with 28 assertions. This establishes feasibility, not production readiness.
+The live synthetic run detected all six expected bubbles with zero missing and zero unexpected labels. The maximum leader-endpoint error was 2.56 pixels in the 1200×800 SVG canvas. The deterministic suite currently passes 18 tests with 62 assertions. This establishes feasibility, not production readiness.
 
 ## Proposed production boundary
 

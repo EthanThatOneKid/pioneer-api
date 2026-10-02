@@ -49,7 +49,7 @@ The fixture contains six source point features with arbitrary names:
 
 The bubble numbers deliberately do not match the IWP names. The fixture converts inches to millimetres, renders source geometry, applies image-space scaling and offsets, offsets the bubble circles from their leader endpoints, shuffles the observation order, and derives the mapping geometrically.
 
-The current suite passes **7 tests with 26 assertions**. The deterministic proof verifies:
+The current suite passes **18 tests with 62 assertions**. The deterministic proof verifies:
 
 - UTF-16LE/BOM/CRLF preservation;
 - source-name extraction and replacement;
@@ -71,8 +71,8 @@ Google Gemini 3.6 Flash was called through the AI SDK against the generated six-
 | Returned bubbles | 6 |
 | Missing numbers | 0 |
 | Unexpected numbers | 0 |
-| Maximum leader-endpoint error | 3.84 px |
-| Total tokens | 3,206 |
+| Maximum leader-endpoint error | 2.56 px |
+| Total tokens | 3,068 |
 | Result | Passed |
 
 This demonstrates that the model-backed observation layer can feed the deterministic matcher on a controlled image. It is not yet evidence of real-world accuracy: the fixture is clean, synthetic, known in advance, and contains only point features.
